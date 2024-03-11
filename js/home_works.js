@@ -32,26 +32,94 @@ gmailButton.addEventListener('click', ()=> {
 //
 // moveLeft();
 
-const element = document.querySelector('.child_block')
-const duration = 1000
-const distance = 100
+// const element = document.querySelector('.child_block')
+// const duration = 1000
+// const distance = 100
+//
+// let startAnimation = null
+//
+// requestAnimationFrame(function measure (time){
+//     if (startAnimation) {
+//         startAnimation = time
+//     }
+//
+//     const progress = (time - startAnimation) / duration
+//
+//     const translate = progress * distance
+//
+//     element.style.transform = `transLatex(${translate}px)`
+//
+//     if (progress < 4.47) {
+//         requestAnimationFrame(measure)
+//     }
+// })
 
-let startAnimation = null
 
-requestAnimationFrame(function measure (time){
-    if (startAnimation) {
-        startAnimation = time
+const parentBlock = document.querySelector('.parent_block')
+const childBlock = document.querySelector('.child_block')
+
+
+let positionX = 0
+let positionY = 0
+
+
+
+
+
+const  maxOffsetWidth = parentBlock.offsetWidth - childBlock.offsetWidth
+const  maxOffsetHeight = parentBlock.offsetHeight - childBlock.offsetHeight
+
+
+
+
+
+const moveBlock = () => {
+    if (positionX < maxOffsetWidth) {
+        positionX++
+        childBlock.style.left = `${positionX}px`
+        requestAnimationFrame(moveBlock)
+    }else if (positionX >= maxOffsetWidth && positionY < maxOffsetHeight) {
+        positionY++
+        childBlock.style.top = `${positionY}px`
+        requestAnimationFrame(moveBlock)
+    }else if (positionY >= maxOffsetHeight && positionX < maxOffsetWidth) {
+        positionX--
+        childBlock.style.left = `${positionX}px`
+        requestAnimationFrame(moveBlock)
+    }else if (positionX >= maxOffsetWidth && positionY < maxOffsetHeight) {
+        positionY--
+        childBlock.style.top = `${positionY}px`
+        requestAnimationFrame(moveBlock)
     }
+}
 
-    const progress = (time - startAnimation) / duration
+moveBlock()
 
-    const translate = progress * distance
 
-    element.style.transform = `transLatex(${translate}px)`
 
-    if (progress < 4.46) {
-        requestAnimationFrame(measure)
-    }
+
+const buttonStart = document.querySelector('#start')
+const buttonStop = document.querySelector('#stop')
+const buttonReset = document.querySelector('#reset')
+const secondsValue = document.querySelector('#seconds')
+
+let seconds = 0
+
+buttonStart.addEventListener('click', () => {
+    const Start = setInterval(() => {
+        seconds++
+        secondsValue.innerHTML = seconds
+    }, 1000)
+
+    buttonStop.addEventListener('click', () => {
+        clearInterval(Start)
+    })
+
+    buttonReset.addEventListener('click', () => {
+        clearInterval(Start)
+        secondsValue.innerHTML = '0'
+        seconds = 0
+    })
 })
 
 

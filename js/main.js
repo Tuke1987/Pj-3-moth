@@ -75,3 +75,10 @@ prev.onclick = () => {
 }
 
 autoSlider(index)
+
+
+
+
+
+
+
