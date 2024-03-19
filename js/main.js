@@ -78,7 +78,3 @@ autoSlider(index)
 
 
 
-
-
-
-

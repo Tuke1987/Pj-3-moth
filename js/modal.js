@@ -40,16 +40,11 @@ autoOpenModal()
 
 
 const scrollEnd = () => {
-    if (addEventListener.document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight){
         openModal()
-    } else {
-        removeEventListener = () => {
-            openModal()
-        }
+        window.removeEventListener('scroll', scrollEnd)
     }
 }
 
-scrollEnd()
-
-
+window.addEventListener('scroll', scrollEnd)
 

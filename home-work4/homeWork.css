@@ -1,0 +1,30 @@
+.person_card {
+    padding: 70px;
+    border: 2px solid gray;
+    width: 450px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.persons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.person_photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px;
+    margin: 0 auto;
+}
+
+.person_photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+

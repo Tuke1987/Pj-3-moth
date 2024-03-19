@@ -71,6 +71,20 @@ autoSlider(index)
 
 
 
+const cards = document.querySelectorAll('.card_switcher')
+const btnNext = document.querySelector('#btn-next')
+const btnPrev = document.querySelector('#btn-prev')
+let index = 0
+
+
+
+btnNext.onclick = () => {
+    index < cards.length - 1 ? index++ : index = 0
+}
+
+btnPrev.onclick = () => {
+    index > 0 ? index-- : index = cards.length - 1
+}
 
 
 
