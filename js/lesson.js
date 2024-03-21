@@ -71,20 +71,49 @@ autoSlider(index)
 
 
 
-const cards = document.querySelectorAll('.card_switcher')
-const btnNext = document.querySelector('#btn-next')
-const btnPrev = document.querySelector('#btn-prev')
-let index = 0
+// CONVERTER
 
 
+const somInput = document.querySelector('#som')
+const usdInput = document.querySelector('#usd')
+const eurInput = document.querySelector('#eur')
 
-btnNext.onclick = () => {
-    index < cards.length - 1 ? index++ : index = 0
+
+const converter = (element, targetElement, eur, current) => {
+    element.oninput = () => {
+        const request = new XMLHttpRequest()
+        request.open('GET', '../data/converter.json')
+        request.setRequestHeader('Content-type', 'application/json')
+        request.send()
+
+        request.onload = () => {
+            const data = JSON.parse(request.response)
+
+            switch (current) {
+                case 'som':
+                    targetElement.value = (element.value / data.usd).toFixed(2)
+                    eur.value = (element.value / data.eur).toFixed(2)
+                    break
+                case 'usd':
+                    targetElement.value = (element.value * data.usd).toFixed(2)
+                    eur.value = (element.value * data.usdEur).toFixed(2)
+                    break
+                case 'eur':
+                    targetElement.value = (element.value * data.eur).toFixed(2)
+                    eur.value = (element.value * data.eurUsd).toFixed(2)
+                    break
+                default:
+                    break
+            }
+            element.value === '' && (targetElement.value = '')
+            element.value === '' && (eur.value = '')
+        }
+    }
 }
 
-btnPrev.onclick = () => {
-    index > 0 ? index-- : index = cards.length - 1
-}
+converter(somInput, usdInput, eurInput,  'som')
+converter(usdInput, somInput, eurInput,  'usd')
+converter(eurInput, somInput, usdInput,  'eur')
 
 
 
