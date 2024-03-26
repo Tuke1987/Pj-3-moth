@@ -48,3 +48,29 @@ const scrollEnd = () => {
 
 window.addEventListener('scroll', scrollEnd)
 
+
+
+const  farmElement = document.querySelector('form')
+
+const postData = (data) => {
+    fetch('server.php', {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: data
+    })
+}
+
+const bindPostData = (form) => {
+    form.onsubmit = (event) => {
+        event.preventDefault()
+
+        const formData = new FormData(form)
+        formData.forEach((item, index) => {
+            console.log(index, item)
+        })
+    }
+}
+
+bindPostData(postData)
+
+

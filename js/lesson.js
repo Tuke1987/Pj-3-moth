@@ -70,7 +70,6 @@ const autoSlider = (i = 0) => {
 autoSlider(index)
 
 
-
 // CONVERTER
 
 
@@ -111,11 +110,60 @@ const converter = (element, targetElement, eur, current) => {
     }
 }
 
-converter(somInput, usdInput, eurInput,  'som')
-converter(usdInput, somInput, eurInput,  'usd')
-converter(eurInput, somInput, usdInput,  'eur')
+converter(somInput, usdInput, eurInput, 'som')
+converter(usdInput, somInput, eurInput, 'usd')
+converter(eurInput, somInput, usdInput, 'eur')
+
+// CARD SWITCHER
+
+const cardBlock = document.querySelector('.card')
+const btnPrev = document.querySelector('#btn-prev')
+const btnNext = document.querySelector('#btn-next')
+
+let count = 1
 
 
+const cardSwitcher = () => {
+    btnNext.onclick = () => {
+        count++
+        fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
+            .then(response => response.json())
+            .then(data => {
+                cardBlock.innerHTML = `
+                <p>${data.title}</p>
+                <p style="color: ${data.completed ? 'green' : 'red'}">${data.completed}</p>
+                <span>${data.id}</span>
+            `
+                if (count >= 201) {
+                    data.id = 1
+                }
+            })
+    }
+    btnPrev.onclick = () => {
+        count--
+        fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
+            .then(response => response.json())
+            .then(data => {
+                cardBlock.innerHTML = `
+                <p>${data.title}</p>
+                <p style="color: ${data.completed ? 'green' : 'red'}">${data.completed}</p>
+                <span>${data.id}</span>
+            `
+                if (count <= 0) {
+                    data.id = 200
+                }
+            })
+    }
+}
+cardSwitcher()
 
 
+const fetchExample = () => {
+    fetch(`https://jsonplaceholder.typicode.com/posts`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+}
+fetchExample()
 
