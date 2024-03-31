@@ -2,7 +2,7 @@
 /* GMAIL BLOCK */
 
 .gmail_block {
-    background: black;
+    background: #353b48;
     padding: 100px 0;
 }
 
@@ -10,7 +10,8 @@
     margin-top: 50px;
     display: flex;
     justify-content: space-evenly;
-    border: 1px solid var(--orange);
+    background: #1e272e;
+    border: 1px solid #c9d1c8;
     height: 300px;
     border-radius: 20px;
     align-items: center;
@@ -30,22 +31,23 @@
 /* MOVE BLOCK */
 
 .move_block {
-    background: black;
+    background: #353b48;
     padding: 100px 0;
 }
 
 .inner_parent_block {
     height: 400px;
     width: 400px;
-    border: 1px solid var(--orange);
+    border: 1px solid #c9d1c8;
     border-radius: 18px;
 }
 
 .parent_block {
     height: 500px;
     width: 500px;
-    border: 1px solid var(--orange);
+    border: 1px solid #c9d1c8;
     position: relative;
+    background: #1e272e;
     margin: 0 auto;
 }
 
@@ -78,7 +80,7 @@
     position: absolute;
     width: 8px;
     height: 1px;
-    background: #fff9;
+    background: #353b48;
     line-height: 20px;
     transform-origin: 50%;
     z-index: 5;
@@ -141,7 +143,7 @@
     font-size: 36px;
     font-weight: 900;
     position: absolute;
-    background: #000;
+    background: #353b48;
     z-index: 10;
     right: calc(var(--clock-size)/ 4.5);
     top: 50%;
@@ -170,7 +172,7 @@
     font-size: 80px;
     height: 100px;
     width: 100%;
-    border-bottom: 1px solid var(--orange);
+    border-bottom: 1px solid #c9d1c8;
     margin-top: 40px;
 }
 
@@ -182,7 +184,7 @@
 
 .stopwatch {
     padding: 100px 0;
-    background: black;
+    background: #353b48;
 }
 
 .time_buttons {

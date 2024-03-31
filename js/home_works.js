@@ -74,28 +74,26 @@ const  maxOffsetHeight = parentBlock.offsetHeight - childBlock.offsetHeight
 
 
 const moveBlock = () => {
-    if (positionX < maxOffsetWidth) {
+    if (positionX < maxOffsetWidth && positionY === 0) {
         positionX++
         childBlock.style.left = `${positionX}px`
-        requestAnimationFrame(moveBlock)
-    }else if (positionX >= maxOffsetWidth && positionY < maxOffsetHeight) {
+        setTimeout(moveBlock, 4)
+    }else if (positionX === maxOffsetWidth && positionY < maxOffsetHeight) {
         positionY++
         childBlock.style.top = `${positionY}px`
-        requestAnimationFrame(moveBlock)
-    }else if (positionY >= maxOffsetHeight && positionX < maxOffsetWidth) {
+        setTimeout(moveBlock, 4)
+    }else if (positionY === maxOffsetHeight && positionX > 0) {
         positionX--
         childBlock.style.left = `${positionX}px`
-        requestAnimationFrame(moveBlock)
-    }else if (positionX >= maxOffsetWidth && positionY < maxOffsetHeight) {
+        setTimeout(moveBlock, 4)
+    }else if (positionX === 0 && positionY > 0) {
         positionY--
         childBlock.style.top = `${positionY}px`
-        requestAnimationFrame(moveBlock)
+        setTimeout(moveBlock, 4)
     }
 }
 
 moveBlock()
-
-
 
 
 const buttonStart = document.querySelector('#start')
@@ -104,23 +102,25 @@ const buttonReset = document.querySelector('#reset')
 const secondsValue = document.querySelector('#seconds')
 
 let seconds = 0
+let interval
 
-buttonStart.addEventListener('click', () => {
-    const Start = setInterval(() => {
-        seconds++
-        secondsValue.innerHTML = seconds
-    }, 1000)
+buttonStart.onclick = () => {
+        clearInterval(interval)
+        interval = setInterval(() => {
+            seconds++
+            secondsValue.innerHTML = seconds
+        }, 1000)
+}
 
-    buttonStop.addEventListener('click', () => {
-        clearInterval(Start)
-    })
+buttonStop.onclick = () => {
+    clearInterval(interval)
+}
 
-    buttonReset.addEventListener('click', () => {
-        clearInterval(Start)
-        secondsValue.innerHTML = '0'
-        seconds = 0
-    })
-})
+buttonReset.onclick = () => {
+    clearInterval(interval)
+    seconds = 0
+    secondsValue.innerHTML = seconds
+}
 
 
 

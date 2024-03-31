@@ -79,15 +79,10 @@ const eurInput = document.querySelector('#eur')
 
 
 const converter = (element, targetElement, eur, current) => {
-    element.oninput = () => {
-        const request = new XMLHttpRequest()
-        request.open('GET', '../data/converter.json')
-        request.setRequestHeader('Content-type', 'application/json')
-        request.send()
-
-        request.onload = () => {
-            const data = JSON.parse(request.response)
-
+    element.oninput = async () => {
+        try {
+        const response = await fetch('../data/converter.json')
+        const data = await response.json()
             switch (current) {
                 case 'som':
                     targetElement.value = (element.value / data.usd).toFixed(2)
@@ -106,6 +101,8 @@ const converter = (element, targetElement, eur, current) => {
             }
             element.value === '' && (targetElement.value = '')
             element.value === '' && (eur.value = '')
+        }catch (error) {
+            console.log(error)
         }
     }
 }
@@ -123,47 +120,77 @@ const btnNext = document.querySelector('#btn-next')
 let count = 1
 
 
-const cardSwitcher = () => {
-    btnNext.onclick = () => {
-        count++
-        fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
-            .then(response => response.json())
-            .then(data => {
-                cardBlock.innerHTML = `
+
+const cardSwitcher  = async (number) => {
+    try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${number}`)
+        const data = await response.json()
+        cardBlock.innerHTML = `
                 <p>${data.title}</p>
                 <p style="color: ${data.completed ? 'green' : 'red'}">${data.completed}</p>
                 <span>${data.id}</span>
             `
-                if (count >= 201) {
-                    data.id = 1
-                }
-            })
-    }
-    btnPrev.onclick = () => {
-        count--
-        fetch(`https://jsonplaceholder.typicode.com/todos/${count}`)
-            .then(response => response.json())
-            .then(data => {
-                cardBlock.innerHTML = `
-                <p>${data.title}</p>
-                <p style="color: ${data.completed ? 'green' : 'red'}">${data.completed}</p>
-                <span>${data.id}</span>
-            `
-                if (count <= 0) {
-                    data.id = 200
-                }
-            })
+
+    }catch (e) {
+        console.error(e)
     }
 }
-cardSwitcher()
 
 
-const fetchExample = () => {
-    fetch(`https://jsonplaceholder.typicode.com/posts`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-        })
+btnNext.onclick = () => {
+    count++
+    if (count > 200) {
+        count = 1
+    }
+    cardSwitcher(count)
+}
+btnPrev.onclick = () => {
+    count--
+    if (count < 1) {
+        count = 200
+    }
+    cardSwitcher(count)
+}
+
+
+cardSwitcher(count)
+
+
+const fetchExample = async () => {
+    try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts`)
+        const data = await response.json()
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
 }
 fetchExample()
+
+// WEATHER SEARCH
+
+const searchInput = document.querySelector('.cityName')
+const city = document.querySelector('.city')
+const temp = document.querySelector('.temp')
+
+// query params
+
+const API_KEY = 'e417df62e04d3b1b111abeab19cea714'
+const URL = 'http://api.openweathermap.org'
+
+
+const citySearch = () => {
+    searchInput.oninput = async (event) => {
+        try {
+            const response = await fetch(`${URL}/data/2.5/weather?q=${event.target.value}&appid=${API_KEY}`)
+            const data = await response.json()
+            city.innerHTML = data.name ? data.name : 'Город не найден...'
+            temp.innerHTML = data?.main?.temp ? Math.round(data?.main?.temp - 273.15) + '&deg;C' : '...'
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+citySearch()
 

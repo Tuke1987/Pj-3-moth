@@ -78,3 +78,34 @@ autoSlider(index)
 
 
 
+// async await, try catch
+
+// async - Асинхронность
+// await - Ожидание
+
+
+const url = 'https://jsonplaceholder.typicode.com/posts?_limit=5'
+
+const getData = async () => {
+    try {
+        const response = await fetch(url)
+        const data = await response.json()
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+getData()
+
+
+
+// const getData = () => {
+//     fetch(url)
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log(data)
+//         })
+// }
+//
+// getData()
